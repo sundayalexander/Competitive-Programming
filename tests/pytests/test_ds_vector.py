@@ -75,3 +75,6 @@ class VectorTestCase(TestCase):
         self.vector.resize(5)
         self.assertEqual(self.vector.capacity, 5)
         self.assertEqual(self.vector.size, 1)
+
+    def tearDown(self):
+        self.vector = None
