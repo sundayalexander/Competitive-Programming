@@ -4,7 +4,7 @@ Linkedlist test case module.
 
 from unittest import TestCase
 
-from impy.datastructures.linkedlist import LinkedList
+from impy.datastructures.linkedlist import LinkedList, DoublyLinkedList, Node
 
 
 class LinkedListTestCase(TestCase):
@@ -88,3 +88,45 @@ class LinkedListTestCase(TestCase):
         self.list.erase(1)
         self.assertEqual(self.list.front(), 2)
         self.assertEqual(self.list.size, 1)
+
+
+class DoublyLinkedListTestCase(TestCase):
+    def setUp(self):
+        self.list = DoublyLinkedList()
+        self.list.push_back(2)
+
+    def tearDown(self):
+        self.list = None
+
+    def assert_list_item(self, index: int, node: Node):
+        values = [50, 4, 99, 3, 11, 2, 10]
+        self.assertEqual(values[index - 1], node.data)
+
+    def test_push(self):
+        self.assertEqual(self.list.size, 1)
+        self.list.push_front(3)
+        self.list.push_front(4)
+        self.list.push_back(10)
+        self.list.insert(50, 1)
+        self.list.insert(99, 3)
+        self.list.insert(11, 5)
+        self.list.traverse(self.assert_list_item)
+        self.assertEqual(self.list.size, 7)
+        self.list = DoublyLinkedList()
+        self.list.push_front(2)
+
+    def test_item_remove(self):
+        for i in range(3, 20):
+            self.list.push_back(i)
+
+        self.assertEqual(self.list.value_at(14), 15)
+        self.list.remove_value(15)
+        self.assertEqual(self.list.value_at(14), 16)
+        self.list.erase(14)
+        self.assertEqual(self.list.value_at(14), 17)
+        self.list.pop_front()
+        self.assertNotEqual(self.list.front(), 2)
+        self.list.pop_back()
+        self.assertNotEqual(self.list.back(), 19)
+        self.list = DoublyLinkedList()
+        self.list.push_front(2)

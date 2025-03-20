@@ -7,6 +7,8 @@ It is advisable to avoid linked list when possible. Check this resource for more
 
 from typing import Any, Callable
 
+_INDEX_OUT_OF_RANGE_MESSAGE = "Index out of range"
+
 
 class Node:
     """
@@ -61,7 +63,7 @@ class LinkedList:
         """
         return self.size == 0
 
-    def __get_node_at(self, stop_count: int = -1) -> Node:
+    def get_node_at(self, stop_count: int = -1) -> Node:
         """
         Get the node at a given stop count from the linked list or return the last node in the list.
         Args:
@@ -87,7 +89,7 @@ class LinkedList:
         if index < 0 or index > self.size:
             return None
 
-        return self.__get_node_at(index).data
+        return self.get_node_at(index).data
 
     def push_front(self, data: Any) -> None:
         """
@@ -145,7 +147,7 @@ class LinkedList:
             self.head = None
             self.tail = None
         else:
-            self.__get_node_at(self.size - 1).next = None
+            self.get_node_at(self.size - 1).next = None
         self.size -= 1
         return data
 
@@ -183,11 +185,11 @@ class LinkedList:
             None
         """
         if index > self.size:
-            raise IndexError("Index out of range")
+            raise IndexError()
         if index == 1:
             self.push_front(data)
         else:
-            before_node = self.__get_node_at(index - 1)
+            before_node = self.get_node_at(index - 1)
             before_node.next = Node(data, next=before_node.next)
             self.size += 1
 
@@ -202,14 +204,14 @@ class LinkedList:
             None
         """
         if index > self.size:
-            raise IndexError("Index out of range")
+            raise IndexError(_INDEX_OUT_OF_RANGE_MESSAGE)
         if index == 1:
             self.pop_front()
 
         elif index == self.size:
             self.pop_back()
         else:
-            before_node = self.__get_node_at(index - 1)
+            before_node = self.get_node_at(index - 1)
             before_node.next = None
             self.size -= 1
 
@@ -221,7 +223,7 @@ class LinkedList:
         """
         if self.empty():
             return None
-        return self.__get_node_at((self.size - n) + 1).data
+        return self.get_node_at((self.size - n) + 1).data
 
     def reverse(self) -> None:
         """
@@ -279,3 +281,157 @@ class LinkedList:
             func(index, node)
             node = node.next
             index += 1
+
+
+class DoublyLinkedList(LinkedList):
+
+    def push_front(self, data: Any) -> None:
+        """
+        Adds an item to the front of the Linkedlist with both next and previous connections.
+        Args:
+            data (Any): the data to add.
+
+        Returns:
+            None
+        """
+        super().push_front(data)
+        if self.head.next:
+            self.head.next.previous = self.head
+
+    def push_back(self, data: Any) -> None:
+        """
+        Adds an item to the back of the Linkedlist with connection to the previous item.
+        Args:
+            data (Any): the data to add.
+        Returns:
+        """
+        if self.empty():
+            self.push_front(data)
+        else:
+            self.tail.next = Node(data, prev=self.tail)
+            self.tail = self.tail.next
+            self.size += 1
+
+    def insert(self, data: Any, index: int) -> None:
+        """
+        Insert value at index, so the current item at that index is pointed to by the new item at
+        the index and the current item previous is set to the new item.
+        Args:
+            data (Any): the data to insert.
+            index (int): index where to insert the new data.
+        Returns:
+            None
+        """
+        if index > self.size:
+            raise IndexError(_INDEX_OUT_OF_RANGE_MESSAGE)
+        if index == 1:
+            self.push_front(data)
+        else:
+            current_node = self.get_node_at(index)
+            temp_node = Node(data, next=current_node, prev=current_node.previous)
+            temp_node.previous.next = temp_node
+            current_node.previous = temp_node
+            self.size += 1
+
+    def erase(self, index: int) -> None:
+        """
+        Removes item at a specified index from the linked list.
+        Args:
+            index (int): index of the item to erase.
+        Returns:
+            None
+        """
+        if index > self.size:
+            raise IndexError(_INDEX_OUT_OF_RANGE_MESSAGE)
+        if index == 1:
+            self.pop_front()
+
+        elif index == self.size:
+            self.pop_back()
+        else:
+            current_node = self.get_node_at(index)
+            current_node.next.previous = current_node.previous
+            current_node.previous.next = current_node.next
+            current_node = None
+            self.size -= 1
+
+    def pop_front(self) -> Any:
+        """
+        Remove the front item, disassociate the new front item previous connection to old front item and
+        return its value.
+        Returns:
+            Any: the data at the front of the linked list.
+        """
+        if self.empty():
+            return None
+        data = self.head.data
+        self.head = self.head.next
+        self.head.previous = None
+        self.size -= 1
+        return data
+
+    def pop_back(self):
+        """
+        Remove item from the back of the list, disassociate the connection with the previous tail item
+        and return its value.
+        Returns:
+            Any: the data at the back of the linked list.
+        """
+        if self.empty():
+            return None
+
+        data = self.tail.data
+
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+        else:
+            self.tail = self.tail.previous
+            self.tail.next = None
+        self.size -= 1
+        return data
+
+    def reverse(self) -> None:
+        """
+        Reverse the elements of the linked list and update the connections.
+        Returns:
+            None
+        """
+        self.tail = self.head
+        self.head = None
+        node = self.tail
+        while node:
+            temp_node = node
+            node = node.next
+            temp_node.next = self.head
+            temp_node.next.previous = temp_node
+            self.head = temp_node
+            self.head.previous = None
+
+    def remove_value(self, data: Any) -> None:
+        """
+        Removes the first item that match the given data in the list.
+        Args:
+            data (Any): the data to match and remove.
+        Returns:
+            None
+        """
+        if self.empty():
+            return None
+
+        if self.head.data == data:
+            self.pop_front()
+            return None
+        elif self.tail.data == data:
+            self.pop_back()
+            return None
+
+        node = self.head
+
+        while node.next:
+            if node.next.data == data:
+                node.next.next.previous = node
+                node.next = node.next.next
+                self.size -= 1
+                return None
+            node = node.next
