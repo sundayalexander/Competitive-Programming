@@ -1,6 +1,6 @@
 """
 An implementation of a Linkedlist data structure.
-Implementation approach can be found here: https://github.com/sundayalexander/coding-interview-university#data-structures
+Implementation approach can be found here: https://github.com/sundayalexander/coding-interview-university?tab=readme-ov-file#linked-lists
 This data structure is for learning purpose only, an optimized implementation is available for production use in the python community.
 It is advisable to avoid linked list when possible. Check this resource for more:https://www.youtube.com/watch?v=bXsKnUGndEU
 """
