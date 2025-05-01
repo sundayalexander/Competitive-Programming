@@ -8,6 +8,8 @@ from impy.datastructures.stack import (
     canonical_path_formatter,
     MinStack,
     is_redundant_parentheses,
+    minimum_remove_to_valid_parentheses,
+    longest_valid_parentheses,
 )
 
 
@@ -40,7 +42,6 @@ def test_stack_with_is_redundant_parentheses():
     )
     expected_results = (0, 1, 1, 0, 1, 1)
     for expression, expected_result in zip(expressions, expected_results):
-        print(expression, expected_result)
         assert is_redundant_parentheses(expression) == expected_result
 
 
@@ -67,3 +68,26 @@ def test_stack_with_min_stack():
     assert item_bucket.get_min() == -1
     assert item_bucket.top() == -1
     assert item_bucket.pop() == None
+
+
+def test_stack_with_min_remove_to_valid_parentheses():
+    invalid_parentheses = (
+        ")a(b.d)",
+        "tan(isq)",
+        "(1337)",
+        "a)(b)d(c(e)",
+    )
+    expected_results = ("a(b.d)", "tan(isq)", "(1337)", "a(b)dc(e)")
+    for invalid, expected_result in zip(invalid_parentheses, expected_results):
+        assert minimum_remove_to_valid_parentheses(invalid) == expected_result
+
+
+def test_stack_with_longest_valid_parentheses():
+    invalid_parentheses = (
+        "()(((",
+        "()((()",
+        "()()()((((((()))))))(",
+    )
+    expected_results = (2, 2, 20)
+    for invalid, expected_result in zip(invalid_parentheses, expected_results):
+        assert longest_valid_parentheses(invalid) == expected_result

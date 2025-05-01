@@ -255,3 +255,70 @@ def is_redundant_parentheses(expression_str: str) -> int:
                 return 1
 
     return 1 if max(parentheses_count.values()) > 1 else 0
+
+
+def minimum_remove_to_valid_parentheses(invalid_str: str) -> str:
+    """
+    A minimum remove to make a valid parentheses.
+    Problem Discussion
+        - A string S contains "(", ")" and lowercase English letters.
+        - Remove the min number of parentheses to make S valid.
+        - Constraints:
+          - 1 <= len(S) <= 1e5
+    Args:
+        invalid_str (str): The string to be validated.
+
+    Returns:
+        str: the valid parentheses string.
+    """
+    valid_parentheses = []
+    parentheses_bucket = Stack()
+    for index, char in enumerate(invalid_str):
+        if char == "(":
+            parentheses_bucket.push(index)
+        elif char == ")":
+            if not parentheses_bucket.is_empty():
+                valid_parentheses.append(parentheses_bucket.pop())
+                valid_parentheses.append(index)
+
+    return "".join(
+        [
+            char
+            for index, char in enumerate(invalid_str)
+            if index in valid_parentheses or char not in "()"
+        ]
+    )
+
+
+def longest_valid_parentheses(parentheses_str: str) -> int:
+    """
+    Return the count of the longest valid parentheses in a given string.
+    Given a string of just "(" and ")".
+    - Find the longest substring of valid parentheses.
+    - Constraints:
+       - 1 <= N <= 3e4
+    Args:
+        parentheses_str (str): parentheses string to be validated.
+    Returns:
+        int: the count of the longest valid parentheses.
+    """
+    parentheses_bucket = Stack()
+    parentheses_status = [False] * len(parentheses_str)
+    for index, char in enumerate(parentheses_str):
+        if char == "(":
+            parentheses_bucket.push(index)
+        else:
+            if not parentheses_bucket.is_empty():
+                parentheses_status[parentheses_bucket.pop()] = True
+                parentheses_status[index] = True
+
+    valid_count = 0
+    valid_parentheses_counts = []
+    for is_valid in parentheses_status:
+        if is_valid:
+            valid_count += 1
+        else:
+            valid_parentheses_counts.append(valid_count)
+            valid_count = 0
+
+    return max(valid_parentheses_counts)
