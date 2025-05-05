@@ -10,6 +10,8 @@ from impy.datastructures.stack import (
     is_redundant_parentheses,
     minimum_remove_to_valid_parentheses,
     longest_valid_parentheses,
+    infix_to_postfix,
+    evaluate_postfix_expression,
 )
 
 
@@ -91,3 +93,24 @@ def test_stack_with_longest_valid_parentheses():
     expected_results = (2, 2, 20)
     for invalid, expected_result in zip(invalid_parentheses, expected_results):
         assert longest_valid_parentheses(invalid) == expected_result
+
+
+def test_stack_with_infix_to_postfix():
+    assert infix_to_postfix("0-1+(3*3)/7") == "01-33*7/+"
+    assert infix_to_postfix("1+3/4*5-7") == "134/5*+7-"
+    assert infix_to_postfix("1+3/(4*5)-7") == "1345*/+7-"
+    assert infix_to_postfix("1+3*(4*(1*5))-7") == "13415***+7-"
+
+
+def test_stack_with_evaluate_postfix_expression():
+    assert evaluate_postfix_expression([1, "+", 1, 2, "*"]) == 2
+    assert (
+        evaluate_postfix_expression(["0", "1", "-", "3", "3", "*", "7", "/", "+"])
+        == 0.2857142857142858
+    )
+    assert (
+        evaluate_postfix_expression(
+            ["1", "3", "4", "1", "5", "*", "*", "*", "+", "7", "-"]
+        )
+        == 54
+    )

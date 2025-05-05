@@ -20,6 +20,7 @@ Example usage:
 """
 
 from typing import Any
+import operator as python_operators
 
 
 class Stack:
@@ -322,3 +323,127 @@ def longest_valid_parentheses(parentheses_str: str) -> int:
             valid_count = 0
 
     return max(valid_parentheses_counts)
+
+
+def infix_to_postfix(prefix_expression) -> str:
+    """
+    Convert infix expression string to post fix expression string.
+    Note:
+        - Infix Notation: This refers to when the operator if fix in-between the operands.
+            - i.e "0 - 1 + (3 * 3) / 7"
+
+        - Postfix Notation: This refers to when the operator is after the operands.
+            - i.e: "1 2 +"  is the same as "1 + 2"
+    Explanation:
+        In convertion from prefix to postfix, it requires that we use the BODMAS operator hierarchy.
+            - This means Bracket "()" has the highest priority.
+            - Subtraction "-" has the lowest priority.
+            - We cannot stack operator with a lower priority on an operator with a higher priority.
+            - Each operator have to be stacked based on the priority from lowest to highest.
+    Args:
+        prefix_expression (str): the prefix expression to be converted.
+    Returns:
+        str: the converted postfix expression.
+    """
+    # learn about operator priority/precedence: https://en.wikipedia.org/wiki/Order_of_operations
+    operator_priorities = {"^": 3, "/": 2, "*": 2, "+": 1, "-": 1, "(": -1}
+    # learn about operator associativity: https://en.wikipedia.org/wiki/Operator_associativity
+    operator_associativity = {
+        "+": "LR",
+        "-": "LR",
+        "*": "LR",
+        "/": "LR",
+        "^": "RL",
+    }
+    # Open bracket assumes the lowes priority to ensure that only close bracket can force it out of the stack.
+    postfix_data = []
+    operator_bucket = Stack()
+    for data in prefix_expression:
+        # Close bracket have the highest priority, and it'd need to be treated specially.
+        if data == "(":
+            operator_bucket.push(data)
+        elif ")" == data:
+            # If the expression token is a closed bracket, we need to pop out every operator
+            # until we get the corresponding open bracket.
+            while not operator_bucket.is_empty() and operator_bucket.peek() != "(":
+                # We do not add the open bracket to the postfix data.
+                postfix_data.append(operator_bucket.pop())
+
+            if operator_bucket.peek() == "(":
+                operator_bucket.pop()
+
+        else:
+
+            if data not in operator_priorities:
+                postfix_data.append(data)
+            else:
+                # Push operator directly into the stack if the stack is empty.
+                if operator_bucket.is_empty():
+                    operator_bucket.push(data)
+                else:
+                    # Push operator in the bucket if the operator token in the top of the stack precedence/priority is lower than
+                    # the incoming operator precedence.
+                    if (
+                        operator_priorities[operator_bucket.peek()]
+                        < operator_priorities[data]
+                    ):
+                        operator_bucket.push(data)
+
+                    # Push the operator directly into the bucket if the priority is the same and the associativity
+                    # is Right to Left.
+                    elif (
+                        operator_priorities[operator_bucket.peek()]
+                        == operator_priorities[data]
+                        and operator_associativity[operator_bucket.peek()] == "RL"
+                    ):
+                        operator_bucket.push(data)
+
+                    # Pop existing operators is the stack if operator priority is lower than the operator on the top of
+                    # of the stack.
+                    else:
+                        while (
+                            not operator_bucket.is_empty()
+                            and operator_priorities[operator_bucket.peek()]
+                            >= operator_priorities[data]
+                            and operator_bucket.peek() != "("
+                        ):
+                            postfix_data.append(operator_bucket.pop())
+
+                        operator_bucket.push(data)
+
+    # Popout the remaining operators in the bucket.
+    while not operator_bucket.is_empty():
+        postfix_data.append(operator_bucket.pop())
+
+    return "".join(postfix_data)
+
+
+def evaluate_postfix_expression(postfix_expression: list) -> float:
+    """
+    Evaluate postfix expression.
+    Problem Statement:
+        Given a postfix expression list, return an evaluated float value.
+    Returns:
+        float: the evaluated postfix expression value.
+    """
+    operators = {
+        "+": python_operators.add,
+        "/": python_operators.truediv,
+        "^": python_operators.pow,
+        "*": python_operators.mul,
+        "-": python_operators.sub,
+    }
+    token_bucket = Stack()
+    for postfix_token in postfix_expression:
+        if postfix_token not in operators:
+            token_bucket.push(int(postfix_token))
+        else:
+            if not token_bucket.is_empty():
+                operand_1 = token_bucket.pop()
+                if not token_bucket.is_empty():
+                    operand_2 = token_bucket.pop()
+                    operand_1 = operators[postfix_token](operand_2, operand_1)
+
+                token_bucket.push(operand_1)
+
+    return token_bucket.pop()
