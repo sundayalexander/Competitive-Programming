@@ -2,6 +2,8 @@
 Backtracking algorithm implementation in python using recursion.
 """
 
+from statistics import median
+
 
 def possible_comb(n: int, k: int) -> int:
     """
@@ -88,3 +90,23 @@ def move_tower(n: int, src: str, dst: str, tmp: str) -> None:
         # Move disk from temporary pole back to destination pole.
         move_tower(n - 1, tmp, dst, src)
 
+
+def quick_sort(items: list) -> list:
+    """
+    Quick sort algorithm implementation for educational purposes only.
+    Args:
+        items (list): list of items.
+
+    Returns:
+        list: sorted list of items.
+    """
+    if len(items) <= 1:
+        return items
+    length = len(items)
+    pivot = median([items[0], items[-1], items[length // 2]])
+
+    return (
+        quick_sort([item for item in items if item < pivot])
+        + [item for item in items if item == pivot]
+        + quick_sort([item for item in items if item > pivot])
+    )
