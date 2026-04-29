@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package test;
+package org.alexander.algorithms;
 
 import java.awt.Point;
 import java.util.ArrayList;
