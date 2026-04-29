@@ -1,4 +1,4 @@
-from impy.algorithms.reversal_algorithm import reverse_right
+from algorithms.reversal_algorithm import reverse_right
 
 
 def test_reverse_right():

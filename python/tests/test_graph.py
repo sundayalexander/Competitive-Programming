@@ -1,6 +1,6 @@
 import pytest
 
-from impy.datastructures.graph import (
+from datastructures.graph import (
     bfs_adjacency_list,
     edge_list_to_adjacency_list,
     edge_list_to_adjacency_matrix,

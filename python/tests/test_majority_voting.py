@@ -1,6 +1,6 @@
 import pytest
 
-from impy.algorithms.majority_voting import majority_votes
+from algorithms.majority_voting import majority_votes
 
 
 @pytest.mark.parametrize(

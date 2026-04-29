@@ -1,6 +1,6 @@
 import pytest
 
-from impy.algorithms.sliding_window import max_window_sum, longest_substring
+from algorithms.sliding_window import max_window_sum, longest_substring
 
 
 @pytest.mark.parametrize(

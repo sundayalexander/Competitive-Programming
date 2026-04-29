@@ -4,7 +4,7 @@ Unit test for Two pointers implementation based on case studies.
 
 import pytest
 
-from impy.algorithms.two_pointers import (
+from algorithms.two_pointers import (
     trapping_rain_water,
     move_zeroes,
     move_zeros_using_for_loop,

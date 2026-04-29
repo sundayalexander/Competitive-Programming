@@ -4,7 +4,7 @@ Test module for Queue data structure with basic operations
 
 import time
 
-from impy.datastructures.queues import ordering_system
+from datastructures.queues import ordering_system
 
 
 def test_order_system(caplog):

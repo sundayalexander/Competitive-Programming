@@ -1,6 +1,6 @@
 import pytest
 
-from impy.algorithms.sort import cycle_sort, bubble_sort
+from algorithms.sort import cycle_sort, bubble_sort
 
 _TEST_INPUTS = [
     ([2, 4, 5, 1, 3], [1, 2, 3, 4, 5]),

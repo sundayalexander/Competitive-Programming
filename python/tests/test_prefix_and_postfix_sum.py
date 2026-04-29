@@ -1,6 +1,6 @@
 import pytest
 
-from impy.algorithms.prefix_and_postfix_sum import (
+from algorithms.prefix_and_postfix_sum import (
     prefix_sum,
     postfix_sum,
     find_pivot_index,

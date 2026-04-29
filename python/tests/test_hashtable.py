@@ -1,4 +1,4 @@
-from impy.datastructures.hashtable import HashTable, Deleted, Empty
+from datastructures.hashtable import HashTable, Deleted, Empty
 
 
 def test_hashtable(caplog):

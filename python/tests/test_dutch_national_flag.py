@@ -1,4 +1,4 @@
-from impy.algorithms.dutch_national_flag import sort_array
+from algorithms.dutch_national_flag import sort_array
 
 
 def test_majority_votes():

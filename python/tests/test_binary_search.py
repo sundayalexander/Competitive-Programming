@@ -2,7 +2,7 @@
 Unit tests for binary search algorithms.
 """
 
-from impy.algorithms.binary_search import binary_search_with_loop, search
+from algorithms.binary_search import binary_search_with_loop, search
 
 
 def test_binary_search():

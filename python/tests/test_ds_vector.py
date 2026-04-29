@@ -4,7 +4,7 @@ Test module for python implementation of vector data structure.
 
 from unittest import TestCase
 
-from impy.datastructures.vector import Vector
+from datastructures.vector import Vector
 
 
 class VectorTestCase(TestCase):

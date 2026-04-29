@@ -4,7 +4,7 @@ Test module for the suffix array implementation.
 
 import pytest
 
-from impy.datastructures.suffix_array import naive_suffix_array, common_prefix_array
+from datastructures.suffix_array import naive_suffix_array, common_prefix_array
 
 
 @pytest.mark.parametrize(

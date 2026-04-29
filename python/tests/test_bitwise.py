@@ -1,4 +1,4 @@
-from impy.bitwise_operations import number_of_different_bits, divide_two_integers
+from algorithms.bitwise_operations import number_of_different_bits, divide_two_integers
 
 
 def test_number_of_different_bits() -> None:

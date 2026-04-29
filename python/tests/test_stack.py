@@ -3,7 +3,7 @@ Test module for Stack data structure implementation.
 This is for educational purpose only.
 """
 
-from impy.datastructures.stack import (
+from datastructures.stack import (
     is_balanced_parentheses,
     canonical_path_formatter,
     MinStack,

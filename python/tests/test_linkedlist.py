@@ -4,7 +4,7 @@ Linkedlist test case module.
 
 from unittest import TestCase
 
-from impy.datastructures.linkedlist import LinkedList, DoublyLinkedList, Node
+from datastructures.linkedlist import LinkedList, DoublyLinkedList, Node
 
 
 class LinkedListTestCase(TestCase):
