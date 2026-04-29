@@ -1,4 +1,4 @@
-package org.alexander.algorithms;
+package org.amowe.algorithms;
 
 /**
  * An implementation of the Kadane’s algorithm.

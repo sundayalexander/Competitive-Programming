@@ -1,6 +1,6 @@
-package tests;
+package algorithms;
 
-import org.alexander.algorithms.KadaneAlgorithm;
+import org.amowe.algorithms.KadaneAlgorithm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

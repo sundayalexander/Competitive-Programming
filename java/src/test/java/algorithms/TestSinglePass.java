@@ -1,8 +1,8 @@
-package tests;
+package algorithms;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.alexander.algorithms.SinglePassAlgorithm;
+import org.amowe.algorithms.SinglePassAlgorithm;
 
 /***
  * Unit test for Single-Pass algorithm implementation.

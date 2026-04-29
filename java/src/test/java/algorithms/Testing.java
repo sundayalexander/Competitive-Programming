@@ -1,4 +1,5 @@
-import javax.swing.text.html.HTMLDocument;
+package algorithms;
+
 import java.io.*;
 import java.util.*;
 

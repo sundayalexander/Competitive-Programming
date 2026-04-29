@@ -89,20 +89,17 @@ java/
 ├── pom.xml
 ├── README.md
 ├── src/
-│   ├── main/java/org/alexander/
+│   ├── main/java/org/amowe/
 │   │   ├── Main.java
 │   │   └── algorithms/
 │   │       ├── BackTracking.java
 │   │       ├── KadaneAlgorithm.java
 │   │       └── SinglePassAlgorithm.java
-│   └── test/java/tests/
+│   └── test/java/algorithms/
 │       ├── TestKadaneAlgorithm.java
 │       └── TestSinglePass.java
-└── tests/java/
-    └── Testing.java
-```
 
-Note: `tests/java/Testing.java` appears to be a legacy standalone class and is not part of the Maven test source set by default.
+```
 
 ## License
 

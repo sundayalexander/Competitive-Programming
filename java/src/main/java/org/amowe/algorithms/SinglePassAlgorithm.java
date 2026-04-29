@@ -4,7 +4,7 @@
  * . To handle large datasets or data streams efficiently, these algorithms typically maintain a small, evolving
  * "state" (or buffer) to update results incrementally.
  */
-package org.alexander.algorithms;
+package org.amowe.algorithms;
 
 public class SinglePassAlgorithm {
 
