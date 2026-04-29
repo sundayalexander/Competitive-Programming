@@ -1,5 +1,7 @@
 """
 Implementation of Binary Search Algorithm using different approaches.
+References:
+    https://www.youtube.com/watch?v=EPwWrs8OtfI
 """
 
 
